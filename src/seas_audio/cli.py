@@ -7,7 +7,7 @@ import contextlib
 import csv
 import sys
 from pathlib import Path
-from typing import Any, Iterable, Iterator, Sequence
+from typing import Any, Iterator, Sequence
 
 from seas_audio import __version__
 from seas_audio.core.cache import FingerprintCache
@@ -16,7 +16,6 @@ from seas_audio.core.config import (
     DEFAULT_MAX_OFFSET_FRAMES,
     DEFAULT_SIMILARITY_THRESHOLD,
     AppPaths,
-    Settings,
 )
 from seas_audio.core.fpcalc import FpcalcNotFoundError, probe
 from seas_audio.core.library import build_library
@@ -63,7 +62,6 @@ def _echo(enabled: bool, message: str) -> None:
 
 def cmd_sanitize(args: argparse.Namespace) -> int:
     paths = AppPaths.default().ensure()
-    settings = Settings.load(paths.settings_file)
 
     def warn(message: str) -> None:
         _echo(not args.quiet, f"  ! {message}")
@@ -135,7 +133,6 @@ def cmd_sanitize(args: argparse.Namespace) -> int:
 
 def cmd_dupes(args: argparse.Namespace) -> int:
     paths = AppPaths.default().ensure()
-    settings = Settings.load(paths.settings_file)
 
     def warn(message: str) -> None:
         _echo(not args.quiet, f"  ! {message}")
