@@ -45,18 +45,7 @@ jobs:
           "Frozen build launched successfully."
 
       - name: Stage and zip
-        shell: pwsh
-        run: |
-          $version = "${{ github.ref_name }}"
-          if ($version -like "v*") { $version = $version.Substring(1) }
-          $stage = "SeasAudioTools-$version-win64"
-          New-Item -ItemType Directory -Force -Path "release\$stage" | Out-Null
-          Copy-Item "build\dist\SeasAudioTools\*" "release\$stage" -Recurse -Force
-          Copy-Item LICENSE "release\$stage\LICENSE.txt"
-          Copy-Item THIRD-PARTY-NOTICES.md "release\$stage\THIRD-PARTY-NOTICES.txt"
-          Copy-Item README.md "release\$stage\README.md"
-          Compress-Archive -Path "release\$stage" -DestinationPath "release\$stage.zip" -Force
-          Get-ChildItem release
+        run: python build/make_release.py --version "${{ github.ref_name }}"
 
       - uses: actions/upload-artifact@v4
         with:
