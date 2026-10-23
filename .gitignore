@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Build artefacts
+/build/build/
+/build/dist/
+/build/work/
+/dist/
+*.spec.bak
+
+# Runtime output - reports, caches and backups are all regenerable
+*.pkl
+*.pkl.tmp
+*.csv
+*.bak
+*.log
+
+# Keep the shipped binary and icon
+!bin/fpcalc.exe
+!assets/icon.ico

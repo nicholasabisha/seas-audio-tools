@@ -1,0 +1,1 @@
+"""Shared infrastructure: paths, scanning, fingerprinting and caching."""

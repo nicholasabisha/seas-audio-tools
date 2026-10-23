@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "seas-audio-tools"
+version = "0.1.0"
+description = "Drag-and-drop MP3 tag sanitizer and audio duplicate finder"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mutagen>=1.47",
+    "Pillow>=10",
+    "numpy>=2.0",
+    "tqdm>=4.66",
+    "tkinterdnd2>=0.4",
+]
+
+[project.optional-dependencies]
+build = ["pyinstaller>=6.0"]
+
+[project.scripts]
+seas-audio = "seas_audio.cli:main"
+
+[project.gui-scripts]
+seas-audio-gui = "seas_audio.ui.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+seas_audio = ["py.typed"]
