@@ -27,7 +27,7 @@ jobs:
         run: python -m pytest tests -q
 
       - name: Build
-        run: python -m PyInstaller build\seas-audio.spec --noconfirm
+        run: python -m PyInstaller build\seas-audio.spec --noconfirm --distpath build\dist --workpath build\work
 
       - name: Verify the frozen build
         shell: pwsh

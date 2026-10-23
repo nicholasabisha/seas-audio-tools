@@ -82,11 +82,13 @@ python -m pytest tests  # 53 tests
 ## Building the portable release
 
 ```powershell
-python -m PyInstaller build\seas-audio.spec --noconfirm
+python -m PyInstaller build\seas-audio.spec --noconfirm --distpath build\dist --workpath build\work
+python build\make_release.py --version v1.0.0
 ```
 
-Output: `build\dist\SeasAudioTools\`. Copy `LICENSE` and
-`THIRD-PARTY-NOTICES.md` into that folder, then zip it.
+Output: `build\dist\SeasAudioTools\`. The second command stages that folder with
+`LICENSE` and `THIRD-PARTY-NOTICES.md` added, and writes
+`release\SeasAudioTools-<version>-win64.zip`.
 
 Tagging `v*` runs `.github/workflows/release.yml`, which does exactly this and
 attaches the zip to the GitHub release.
