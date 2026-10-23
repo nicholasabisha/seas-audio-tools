@@ -14,6 +14,7 @@ venv/
 /build/dist/
 /build/work/
 /dist/
+/release/
 *.spec.bak
 
 # Runtime output - reports, caches and backups are all regenerable

@@ -1,9 +1,8 @@
 """Locate and invoke the Chromaprint ``fpcalc`` binary.
 
-The old scripts hardcoded ``e:/.TheSeas/Music/Script/similarity/fpcalc.exe`` in
-one place and used a relative path in the other. This resolves it properly:
-explicit argument -> environment variable -> PyInstaller bundle -> repo ``bin``
--> the package folder -> ``PATH``.
+Resolution order: explicit argument -> ``SEAS_FPCALC`` environment variable ->
+PyInstaller bundle -> the repository's ``bin`` folder -> the package folder ->
+``PATH``. Nothing is hardcoded to a particular machine.
 """
 
 from __future__ import annotations

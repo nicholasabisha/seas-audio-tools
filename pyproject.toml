@@ -4,10 +4,41 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "seas-audio-tools"
-version = "0.1.0"
+version = "1.0.0"
 description = "Drag-and-drop MP3 tag sanitizer and audio duplicate finder"
 readme = "README.md"
-requires-python = ">=3.10"
+license = "GPL-2.0-or-later"
+license-files = ["LICENSE"]
+# NumPy 2.x is the floor-setter here, not this project's own syntax.
+requires-python = ">=3.11"
+authors = [{ name = "Nicholas Abisha", email = "nicabisha@gmail.com" }]
+keywords = [
+    "audio",
+    "mp3",
+    "id3",
+    "id3v2",
+    "cover-art",
+    "deduplication",
+    "audio-fingerprint",
+    "chromaprint",
+    "tkinter",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Win32 (MS Windows)",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: Microsoft :: Windows :: Windows 11",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Sound/Audio",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Topic :: Multimedia :: Sound/Audio :: Editors",
+]
 dependencies = [
     "mutagen>=1.47",
     "Pillow>=10",
@@ -18,6 +49,13 @@ dependencies = [
 
 [project.optional-dependencies]
 build = ["pyinstaller>=6.0"]
+dev = ["pytest>=8"]
+
+[project.urls]
+Homepage = "https://github.com/nicholasabisha/seas-audio-tools"
+Source = "https://github.com/nicholasabisha/seas-audio-tools"
+Issues = "https://github.com/nicholasabisha/seas-audio-tools/issues"
+Releases = "https://github.com/nicholasabisha/seas-audio-tools/releases"
 
 [project.scripts]
 seas-audio = "seas_audio.cli:main"

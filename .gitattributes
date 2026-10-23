@@ -1,0 +1,13 @@
+# Keep binary assets byte-identical across platforms.
+*.exe binary
+*.ico binary
+*.pkl binary
+*.zip binary
+
+# Normalise text on commit so the release and CI see the same bytes.
+*.py text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.spec text eol=lf

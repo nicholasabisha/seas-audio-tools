@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test / ${{ matrix.os }} / py${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install Tk and Chromaprint (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk libchromaprint-tools
+
+      - name: Install the package
+        run: python -m pip install -e ".[dev]"
+
+      - name: Show that fpcalc resolves from PATH (Linux)
+        if: runner.os == 'Linux'
+        run: fpcalc -version
+
+      - name: Run the test suite
+        run: python -m pytest tests -q
+
+  build-windows:
+    name: frozen build / windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+
+      - name: Install build dependencies
+        run: python -m pip install -e ".[build]"
+
+      - name: Build
+        run: python -m PyInstaller build\seas-audio.spec --noconfirm
+
+      - name: Verify the frozen build
+        shell: pwsh
+        run: |
+          $dir = "build\dist\SeasAudioTools"
+          $exe = Join-Path $dir "SeasAudioTools.exe"
+          if (-not (Test-Path $exe)) { throw "Missing executable" }
+          if (-not (Test-Path (Join-Path $dir "_internal\fpcalc.exe"))) { throw "fpcalc.exe was not bundled" }
+          $p = Start-Process -FilePath $exe -PassThru
+          Start-Sleep -Seconds 12
+          if (-not (Get-Process -Id $p.Id -ErrorAction SilentlyContinue)) {
+            throw "The application exited during startup"
+          }
+          Stop-Process -Id $p.Id -Force
+          "Frozen build launched successfully."
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SeasAudioTools-win64
+          path: build/dist/SeasAudioTools
+          retention-days: 14
